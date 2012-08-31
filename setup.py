@@ -27,7 +27,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='sentry-pushover',
-    version='1.0.0',
+    version='1.0.2',
     author='Janez Troha',
     author_email='janez.troha@gmail.com',
     url='https://github.com/dz0ny/sentry-pushover',

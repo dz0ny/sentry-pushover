@@ -1,6 +1,6 @@
 Sentry-Pushover
 =============
-A [Sentry](https://www.getsentry.com/) plugin that sends notofications to a [Pushover](https://pushover.net).
+A [Sentry](https://www.getsentry.com/) plugin that sends notifications to a [Pushover](https://pushover.net).
 
 Installation
 ------------

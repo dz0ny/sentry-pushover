@@ -26,7 +26,7 @@ along with Sentry-Pushover.  If not, see <http://www.gnu.org/licenses/>.
 '''
 
 from django import forms
-
+import logging
 from sentry.conf import settings
 from sentry.plugins import Plugin
 
@@ -38,7 +38,14 @@ class PushoverSettingsForm(forms.Form):
 
     userkey = forms.CharField(help_text='Your user key. See https://pushover.net/')
     apikey = forms.CharField(help_text='Application API token. See https://pushover.net/apps/')
-    priority = forms.BooleanField(help_text='High-priority notifications, also bypass quiet hours.')
+
+    choices = ((logging.CRITICAL, 'CRITICAL'), (logging.ERROR, 'ERROR'), (logging.WARNING,
+               'WARNING'), (logging.INFO, 'INFO'), (logging.DEBUG, 'DEBUG'))
+    severity = forms.ChoiceField(choices=choices,
+                                 help_text="Don't send notifications for events below this level.")
+
+    priority = \
+        forms.BooleanField(help_text='High-priority notifications, also bypasses quiet hours.')
 
 
 class PushoverNotifications(Plugin):
@@ -69,6 +76,10 @@ class PushoverNotifications(Plugin):
         ):
 
         if not is_new or not self.is_setup(event.project):
+            return
+
+        # https://github.com/getsentry/sentry/blob/master/src/sentry/models.py#L353
+        if event.level < int(self.get_option('severity', event.project)):
             return
 
         title = '%s: %s' % (event.get_level_display().upper(), event.error().split('\n')[0])
