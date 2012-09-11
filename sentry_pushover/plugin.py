@@ -57,6 +57,11 @@ class PushoverNotifications(Plugin):
     conf_title = 'Pushover'
     conf_key = 'pushover'
 
+    resource_links = [
+        ('Bug Tracker', 'https://github.com/dz0ny/sentry-pushover/issues'),
+        ('Source', 'https://github.com/dz0ny/sentry-pushover'),
+    ]
+
     version = sentry_pushover.VERSION
     project_conf_form = PushoverSettingsForm
 
