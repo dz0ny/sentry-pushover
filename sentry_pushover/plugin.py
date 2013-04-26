@@ -45,7 +45,8 @@ class PushoverSettingsForm(forms.Form):
                                  help_text="Don't send notifications for events below this level.")
 
     priority = \
-        forms.BooleanField(help_text='High-priority notifications, also bypasses quiet hours.')
+        forms.BooleanField(required=False,
+                           help_text='High-priority notifications, also bypasses quiet hours.')
 
 
 class PushoverNotifications(Plugin):
